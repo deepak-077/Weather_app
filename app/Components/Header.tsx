@@ -5,7 +5,7 @@ function Header(){
                 <img src="logo.svg" alt="" />
             
             </div>
-            <div className="flex items-center  bg-[#3a3550] gap-0.5 p-1 rounded-lg">
+            <div className="flex items-center  bg-[#3a3550] gap-0.5 p-1 rounded-lg hover:cursor-pointer">
                 <img className="size-5" src="cog.png" alt="" />
                 Units
                 <img className="size-5" src="down.png" alt="" />
