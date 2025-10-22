@@ -8,7 +8,7 @@ function Card1(){
             <div className="flex items-center text-white p-1.5 rounded-lg gap-3">
                 <div className="flex relative">
                     <img className="size-5 absolute ml-3 mt-2.5" src="search.svg" alt="" />
-                    <input className="w-[350px] rounded-lg p-2 bg-gray-600 " type="text"  placeholder=" Search for a place... "/>
+                    <input className="w-[350px] rounded-lg p-2 pl-9 bg-[#3a3550] " type="text"  placeholder=" Search for a place... "/>
 
                 </div>
                 <button className="bg-blue-600 p-2 font-semibold rounded-lg">Search</button>

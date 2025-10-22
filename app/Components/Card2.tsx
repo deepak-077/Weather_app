@@ -17,18 +17,18 @@ const days=[
 ]
 
 const hour=[
-    { id:0,time:"3 PM" , temp:20},
-    { id:1,time:"4 PM" , temp:20},
-    { id:2,time:"5 PM" , temp:20},
-    { id:3,time:"6 PM" , temp:20},
-    { id:4,time:"7 PM" , temp:20},
-    { id:5,time:"8 PM" , temp:20},
-    { id:6,time:"9 PM" , temp:20},
-    { id:7,time:"10 PM", temp:20},
+    { id:0,time:"3 PM" , temp:20, img:"icon-rain.webp",},
+    { id:1,time:"4 PM" , temp:20, img:"icon-drizzle.webp"},
+    { id:2,time:"5 PM" , temp:20, img:"icon-sunny.webp"},
+    { id:3,time:"6 PM" , temp:20, img:"icon-partly-cloudy.webp"},
+    { id:4,time:"7 PM" , temp:20, img:"icon-storm.webp"},
+    { id:5,time:"8 PM" , temp:20, img:"icon-snow.webp"},
+    { id:6,time:"9 PM" , temp:20, img:"icon-fog.webp"},
+    { id:7,time:"10 PM", temp:20, img:"icon-fog.webp"},
 ]
 function Card2(){
     return(
-        <div className="flex gap-6">
+        <div className="flex gap-6 justify-center">
             
             {/* left component */}
             <div className=" flex flex-col gap-6">
@@ -39,7 +39,7 @@ function Card2(){
             </div>
             <div className="flex gap-5">
                 {cards.map((item,index) =>(
-                    <div key={item.id} className="bg-gray-500 w-[120px] rounded-lg h-[80px]">Feels Like</div>
+                    <div key={item.id} className="bg-[#3a3550] w-[120px] rounded-lg h-[80px]">Feels Like</div>
            
                 ))}
                 
@@ -50,7 +50,7 @@ function Card2(){
 
                 <div className="flex gap-3">
                     {days.map((item,index) =>(
-                    <div key={item.id} className="bg-gray-500 w-[70px] rounded-lg h-[100px] flex flex-col justify-center items-center">
+                    <div key={item.id} className="bg-[#3a3550] w-[70px] rounded-lg h-[100px] flex flex-col justify-center items-center">
                         <span className="text-sm">{item.title}</span>
                         <img className="size-[50px]" src={item.img} alt="" />
                         <div className="flex text-sm justify-between">
@@ -71,22 +71,31 @@ function Card2(){
             </div>
 
             {/* right component */}
-            <div className="bg-gray-500 w-[300px] p-2">
-                <div className="flex justify-around">
+            <div className="bg-[#3a3550] w-[300px] p-2 rounded-2xl">
+                <div className="flex justify-around mb-3 text-md items-center text-white">
 
                     <h1>Hourly Forecast</h1>
-                    <div className="flex justify-around border ">Monday
+                    <div className="flex justify-around shadow-lg rounded-lg p-1.5 text-md items-center">Monday
                         <img className="size-5" src="down.png" alt="down" />
                     </div>
 
                 </div>
-                <div >
+                <div className="flex flex-col items-center gap-2 ">
                         {hour.map((item , index)=>(
-                            <span key={item.id} className="border w-[200px]">
-                                <img src="" alt="" />
-                                {item.time}
-                                {item.temp}
-                            </span>
+                            <div key={item.id} className="flex justify-between items-center w-[240px] p-1 rounded-lg shadow-lg text-white">
+                                <div className="flex items-center">
+                                    <img className="size-[36px]" src={item.img} alt="" />
+                                    {item.time}
+
+                                </div>
+
+                                <div>
+                                    {item.temp}
+
+                                </div>
+                                
+                                
+                            </div>
                         ))}
                     </div>
 
