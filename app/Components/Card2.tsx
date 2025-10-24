@@ -1,9 +1,12 @@
+import weatherIcon from "./weatherIcon";
 
 function Card2({weatherData,city}){
     const {current_weather,hourly,daily}=weatherData || {}
 
     // Fallback for missing data
   if (!current_weather || !hourly || !daily || !hourly.relative_humidity_2m || !hourly.precipitation) return null;
+
+  const icon=weatherIcon(current_weather.weathercode)
 
 
   const now = new Date();
@@ -12,11 +15,10 @@ function Card2({weatherData,city}){
 
   const hourIndex = hourly.time.findIndex(time => time === nowISOString);
 
-  // Fallback index if current hour not found
   const idx = hourIndex >= 0 ? hourIndex : 0;
+  const currentHumidity = hourly.relative_humidity_2m[idx] ?? "N/A";
+  const currentPrecipitation = hourly.precipitation[idx] ?? "N/A";
 
-  const currentHumidity = hourly.relative_humidity_2m[idx];
-  const currentPrecipitation = hourly.precipitation[idx];
     
     const hourlyTemps = hourly.time.slice(0, 8).map((time, index) => ({
     time: new Date(time).toLocaleTimeString([], { hour: '2-digit' }),
@@ -95,7 +97,7 @@ const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long",
                     {daily.time.map((day,index) =>(
                     <div key={index} className="bg-[#3a3550] w-[70px] rounded-lg h-[100px] flex flex-col justify-center items-center">
                         <span className="text-sm">{new Date(day).toLocaleDateString('en-US', { weekday: 'short' })}</span>
-                        <img className="size-[50px]" src="icon-sunny.webp" alt="" />
+                        <img className="size-[50px]" src={icon} alt="icon" />
                         <div className="flex  justify-between">
                             <span className="text-xs">{daily.temperature_2m_max[index]}°</span>
                             <span className="text-xs">{daily.temperature_2m_min[index]}°</span>
@@ -127,7 +129,7 @@ const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long",
                         {hourlyTemps.map((item , index)=>(
                             <div key={index} className="flex justify-between items-center w-[240px] p-1 rounded-lg shadow-lg text-white">
                                 <div className="flex items-center">
-                                    <img className="size-[36px]" src="icon-sunny.webp" alt="" />
+                                    <img className="size-[36px]" src={icon} alt="weather icon" />
                                     {item.time}
 
                                 </div>

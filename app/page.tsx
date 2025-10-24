@@ -20,7 +20,7 @@ export default function Home() {
           const {latitude,longitude}=position.coords;
 
           try{
-            const geoResponse = await axios.get(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${latitude}&longitude=${longitude}&count=1`)
+            const geoResponse = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,precipitation,weathercode,windspeed_10m,snowfall,cloudcover&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
 
             const cityData = geoResponse.data.results?.[0];
 
@@ -60,12 +60,15 @@ export default function Home() {
      
 
   return (
-    <div className="flex flex-col gap-6 bg-blue-950 h-full">
+    <div className="flex flex-col  gap-6 bg-blue-950 h-full">
       <Header/>
-      <Card1 search={search} setSearch={setSearch} setWeatherData={setWeatherData} setCity={setCity}/>
-      <Card2 weatherData={weatherData} city={city}/>
 
+      <div className="flex flex-col items-center mt-6">
+        <Card1 search={search} setSearch={setSearch} setWeatherData={setWeatherData} setCity={setCity}/>
+        <Card2 weatherData={weatherData} city={city}/>
 
+      </div>
+      
     </div>
   );
 }

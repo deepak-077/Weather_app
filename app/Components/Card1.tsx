@@ -34,7 +34,7 @@ function Card1( {search, setSearch, setWeatherData,setCity} ) {
 
         try{
             const response = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,precipitation,weathercode,windspeed_10m,snowfall,cloudcover&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
-
+            
             console.log(response)
             setWeatherData(response.data)
         }
