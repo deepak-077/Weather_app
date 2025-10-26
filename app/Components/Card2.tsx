@@ -32,7 +32,7 @@ const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long",
 
 
     return(
-        <div className="flex flex-col md:flex-row gap-6 justify-center">
+        <div className="flex flex-col md:flex-row gap-6 justify-center ">
             
             {/* left component */}
             <div className="w-full max-w-[600px] flex flex-col gap-6">
@@ -120,7 +120,7 @@ const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long",
                 <div className="flex justify-around mb-3 text-md items-center text-white">
 
                     <h1>Hourly Forecast</h1>
-                    <div className="flex justify-around shadow-lg rounded-lg p-1.5 text-md items-center">Monday
+                    <div className="flex justify-around shadow-lg rounded-lg p-1.5 text-md items-center">{dayName}
                         <img className="size-5" src="down.png" alt="down" />
                     </div>
 
