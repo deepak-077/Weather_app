@@ -34,7 +34,6 @@ const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long",
 const [clickedForecast,setClickedForecast]=useState(false)
 
 
-
     return(
         <div className="flex flex-col md:flex-row gap-6 justify-center ">
             
@@ -43,6 +42,7 @@ const [clickedForecast,setClickedForecast]=useState(false)
                 
                 {/* temperature */}
             <div className=" text-white bg-[url('/large.svg')] bg-cover bg-center h-[200px] rounded-2xl flex flex-col sm:flex-row justify-between items-center p-5" >
+                
                 <div className="font-bold">
                     <p>{city.name},{city.country} </p>
                     <p>{dayName}, {date}</p> 
@@ -59,7 +59,7 @@ const [clickedForecast,setClickedForecast]=useState(false)
 
                 {/* info Cards */}
                 <div className="bg-[#3a3550] w-[120px] rounded-lg h-[80px] text-white p-2">
-                    
+        
                     <p>Feels Like</p>
                     <p>{current_weather.temperature}°C</p>
                     
@@ -88,8 +88,8 @@ const [clickedForecast,setClickedForecast]=useState(false)
 
             </div>
 
+            
             {/* daily forecast */}
-
             <div className="flex flex-col gap-3 text-white">
                 <h1>Daily Forecast</h1>
 
