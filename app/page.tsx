@@ -6,8 +6,6 @@ import Card2 from "./Components/Card2";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
-
 export default function Home() {
   const [weatherData,setWeatherData]=useState(null)
   const [search,setSearch]= useState("") 
@@ -19,9 +17,9 @@ export default function Home() {
         async(position)=>{
           const {latitude,longitude}=position.coords;
 
+          // fetching the coordinates for city
           try{
-            const geoResponse = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,precipitation,weathercode,windspeed_10m,snowfall,cloudcover&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
-
+            const geoResponse = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,precipitation,weathercode,windspeed_10m,snowfall,cloudcover&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
             const cityData = geoResponse.data.results?.[0];
 
             if(cityData){
@@ -30,12 +28,11 @@ export default function Home() {
             else{
               setCity({name:"Unknown", country:""})
             }
-
           }
+
           catch(error){
             console.error("Error fetching city name", error);
             setCity({ name: "Unknown", country: "" });
-
           }
 
            // Fetch weather data for coordinates
@@ -57,8 +54,6 @@ export default function Home() {
   }, []);
   
 
-     
-
   return (
     <div className="flex flex-col  gap-6 bg-blue-950 h-full">
       <Header/>
@@ -66,7 +61,6 @@ export default function Home() {
       <div className="flex flex-col items-center mt-6">
         <Card1 search={search} setSearch={setSearch} setWeatherData={setWeatherData} setCity={setCity}/>
         <Card2 weatherData={weatherData} city={city}/>
-
       </div>
       
     </div>
