@@ -1,3 +1,5 @@
+"use client"
+import { useState } from "react";
 import weatherIcon from "./weatherIcon";
 
 function Card2({weatherData,city}){
@@ -29,6 +31,8 @@ const today = new Date();
 const dayName = today.toLocaleDateString("en-US", { weekday: "long" });
 const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
+const [clickedForecast,setClickedForecast]=useState(false)
+
 
 
     return(
@@ -54,7 +58,6 @@ const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long",
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4  md:gap-5">
 
                 {/* info Cards */}
-                
                 <div className="bg-[#3a3550] w-[120px] rounded-lg h-[80px] text-white p-2">
                     
                     <p>Feels Like</p>
@@ -83,12 +86,9 @@ const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long",
                     
                 </div>
 
-                
-                
-           
-                
-                
             </div>
+
+            {/* daily forecast */}
 
             <div className="flex flex-col gap-3 text-white">
                 <h1>Daily Forecast</h1>
@@ -96,23 +96,19 @@ const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long",
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-1 lg:gap-3">
                     {daily.time.map((day,index) =>(
                     <div key={index} className="bg-[#3a3550] w-[70px] rounded-lg h-[100px] flex flex-col justify-center items-center">
+
                         <span className="text-sm">{new Date(day).toLocaleDateString('en-US', { weekday: 'short' })}</span>
                         <img className="size-[50px]" src={icon} alt="icon" />
+
                         <div className="flex  justify-between">
                             <span className="text-xs">{daily.temperature_2m_max[index]}°</span>
                             <span className="text-xs">{daily.temperature_2m_min[index]}°</span>
                         </div>
                         
-                        
                     </div>
-           
                 ))}
-
                 </div>
-                
-                
             </div>
-
             </div>
 
             {/* right component */}
@@ -120,36 +116,55 @@ const date = today.toLocaleDateString("en-US", { year: "numeric", month: "long",
                 <div className="flex justify-around mb-3 text-md items-center text-white">
 
                     <h1>Hourly Forecast</h1>
-                    <div className="flex justify-around shadow-lg rounded-lg p-1.5 text-md items-center">{dayName}
+
+                    {/* Selecting day */}
+                    <div onClick={()=>{
+                            setClickedForecast(prev=>!prev)
+                            console.log(clickedForecast)
+                        }}>
+                        <div className="flex justify-around shadow-lg rounded-lg p-1.5 text-md items-center">{dayName}
                         <img className="size-5" src="down.png" alt="down" />
+                        </div>
+                        <div className={`absolute border border-black p-2 z-20 transition-all duration-300 ease-in-out transform ${clickedForecast?"opacity-100 translate-y-2":"opacity-0 -translate-y-4"}`}>
+
+                        {/* dropdown */}
+                        <div className="bg-[#3a3550]  ">
+                            <ul>
+                                <li className="p-1 rounded-lg hover:bg-[#4d466a] hover:cursor-pointer shadow-lg">Monday</li>
+                                <li className="p-1 rounded-lg hover:bg-[#4d466a] hover:cursor-pointer shadow-lg">Tuesday</li>
+                                <li className="p-1 rounded-lg hover:bg-[#4d466a] hover:cursor-pointer shadow-lg">Wednesday</li>
+                                <li className="p-1 rounded-lg hover:bg-[#4d466a] hover:cursor-pointer shadow-lg">Thursday</li>
+                                <li className="p-1 rounded-lg hover:bg-[#4d466a] hover:cursor-pointer shadow-lg">Friday</li>
+                                <li className="p-1 rounded-lg hover:bg-[#4d466a] hover:cursor-pointer shadow-lg">Saturday</li>
+                            </ul>
+
+                        </div>
+                        </div>
+
+
                     </div>
+                    
 
                 </div>
                 <div className="flex flex-col items-center gap-2 ">
                         {hourlyTemps.map((item , index)=>(
                             <div key={index} className="flex justify-between items-center w-[240px] p-1 rounded-lg shadow-lg text-white">
+
                                 <div className="flex items-center">
                                     <img className="size-[36px]" src={icon} alt="weather icon" />
                                     {item.time}
-
                                 </div>
 
                                 <div>
                                     {item.temp}°C
-
                                 </div>
-                                
-                                
+                                                                
                             </div>
                         ))}
                     </div>
 
-
             </div>
 
-            
-
-            
         </div>
     )
 
