@@ -9,7 +9,7 @@ function Card2({ weatherData, city }) {
   // Fallback for missing data
   if (!current_weather || !hourly || !daily || !hourly.relative_humidity_2m || !hourly.precipitation) return null;
 
-  // State for dropdown and selected day
+  // State variables for dropdown and selected day
   const [clickedForecast, setClickedForecast] = useState(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState(0); // default = today
 
@@ -42,7 +42,7 @@ function Card2({ weatherData, city }) {
       weathercode: hourly.weathercode ? hourly.weathercode[hourlyStartIndex + i] : current_weather.weathercode
     }));
 
-  // Current hour index for info cards
+  // Current hour 
   const currentHourIndex = hourly.time.findIndex(time => new Date(time) >= now);
   const idx = currentHourIndex >= 0 ? currentHourIndex : 0;
   const currentHumidity = hourly.relative_humidity_2m[idx] ?? "N/A";

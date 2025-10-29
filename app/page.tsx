@@ -11,47 +11,48 @@ export default function Home() {
   const [search,setSearch]= useState("") 
   const [city,setCity]=useState(null)
 
-  useEffect(()=>{
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(
-        async(position)=>{
-          const {latitude,longitude}=position.coords;
+  useEffect(() => {
+  if (!navigator.geolocation) return;
 
-          // fetching the coordinates for city
-          try{
-            const geoResponse = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,precipitation,weathercode,windspeed_10m,snowfall,cloudcover&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
-            const cityData = geoResponse.data.results?.[0];
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const { latitude, longitude } = position.coords;
 
-            if(cityData){
-              setCity({name: cityData.name, country:cityData.country})
-            }
-            else{
-              setCity({name:"Unknown", country:""})
-            }
-          }
-
-          catch(error){
-            console.error("Error fetching city name", error);
-            setCity({ name: "Unknown", country: "" });
-          }
-
-           // Fetch weather data for coordinates
-          try {
-            const weatherResponse = await axios.get(
-              `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto`
-            );
-            setWeatherData(weatherResponse.data);
-          } catch (error) {
-            console.error("Error fetching weather data", error);
-          }
-        },
-        (error) => {
-          console.error("Geolocation permission denied or error", error);
-          
+      try {
+        // 1️⃣ Reverse geocode to get city name
+        const geoResponse = await axios.get(
+          `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${latitude}&longitude=${longitude}`
+        );
+        const cityData = geoResponse.data.results?.[0];
+        if (cityData) {
+          setCity({ name: cityData.name, country: cityData.country });
+        } else {
+          setCity({ name: "Unknown", country: "" });
         }
-      );
+      } catch (error) {
+        console.error("Error fetching city name", error);
+        setCity({ name: "Unknown", country: "" });
+      }
+
+      try {
+        // 2️⃣ Fetch weather data
+        const weatherResponse = await axios.get(
+          `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,precipitation,weathercode,windspeed_10m,snowfall,cloudcover&daily=temperature_2m_max,temperature_2m_min&timezone=auto`
+        );
+        setWeatherData(weatherResponse.data);
+      } catch (error) {
+        console.error("Error fetching weather data", error);
+      }
+    },
+    (error) => {
+      console.error("Geolocation permission denied or error", error);
+      // Optionally, fallback to a default city
+      setCity({ name: "New York", country: "US" });
+      // You could also fetch weather for default coordinates
     }
-  }, []);
+  );
+}, []);
+
   
 
   return (
