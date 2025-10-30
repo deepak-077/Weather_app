@@ -3,7 +3,21 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-function Card1({ search, setSearch, setWeatherData, setCity }) {
+interface Card1Props {
+  search: string;
+  setSearch: (value: string) => void;
+  setWeatherData: (data: any) => void;
+  setCity: (city: { name: string; country: string }) => void;
+}
+
+interface CityData {
+  name:string,
+  country:string,
+  latitude:number,
+  longitude:number
+}
+
+function Card1({ search, setSearch, setWeatherData, setCity }:Card1Props) {
 
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,7 +36,7 @@ function Card1({ search, setSearch, setWeatherData, setCity }) {
     return () => clearTimeout(timer);
   }, [search]);
 
-  async function fetchSuggestions(query) {
+  async function fetchSuggestions(query:string) {
     setLoading(true);
     try {
       const response = await axios.get(
@@ -40,7 +54,7 @@ function Card1({ search, setSearch, setWeatherData, setCity }) {
     }
   }
 
-  async function selectCity(cityData) {
+  async function selectCity(cityData:CityData) {
     const { name, country, latitude, longitude } = cityData;
     setCity({ name, country });
     setSearch(name);
