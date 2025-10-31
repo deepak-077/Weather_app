@@ -1,5 +1,5 @@
 "use client"
-
+import Image from "next/image";
 import Header from "./Components/Header";
 import Card1 from "./Components/Card1";
 import Card2 from "./Components/Card2";

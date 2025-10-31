@@ -1,18 +1,21 @@
 "use client"
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Image from "next/image";
 import { useState } from "react";
 import weatherIcon from "./weatherIcon";
 
-function Card2({ weatherData, city }) {
+function Card2({ weatherData, city }:any) {
   const { current_weather, hourly, daily } = weatherData || {};
-
-  // Fallback for missing data
-  if (!current_weather || !hourly || !daily || !hourly.relative_humidity_2m || !hourly.precipitation) return null;
-
+  
   // State variables for dropdown and selected day
   const [clickedForecast, setClickedForecast] = useState(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState(0); // default = today
 
+
+  // Fallback for missing data
+  if (!current_weather || !hourly || !daily || !hourly.relative_humidity_2m || !hourly.precipitation) return null;
+
+  
   // Daily dates
   const dailyDates = daily.time.map(day => new Date(day));
 
@@ -105,7 +108,7 @@ function Card2({ weatherData, city }) {
               
               <div key={index} className="bg-[#3a3550] w-[70px] rounded-lg h-[100px] flex flex-col justify-center items-center">
                 <span className="text-sm">{new Date(day).toLocaleDateString('en-US', { weekday: 'short' })}</span>
-                <img className="size-[50px]" src={icon} alt="icon" />
+                <Image className="size-[50px]" src={icon} alt="icon" />
                 
                 <div className="flex justify-between w-full px-1">
                   <span className="text-xs">{daily.temperature_2m_max[index]}°</span>
@@ -130,7 +133,7 @@ function Card2({ weatherData, city }) {
             <div className="hover:cursor-pointer" onClick={() => setClickedForecast(prev => !prev)}>
               <div className="flex justify-around shadow-lg rounded-lg p-1.5 text-md items-center">
                 {dayName}
-                <img className="size-5" src="down.png" alt="down" />
+                <Image className="size-5" src="down.png" alt="down" />
               </div>
             </div>
 
@@ -158,7 +161,7 @@ function Card2({ weatherData, city }) {
           {dayHourlyTemps.map((item, index) => (
             <div key={index} className="flex justify-between items-center w-[240px] p-1 rounded-lg shadow-lg text-white">
               <div className="flex items-center gap-2">
-                <img className="size-[36px]" src={weatherIcon(item.weathercode)} alt="weather icon" />
+                <Image className="size-[36px]" src={weatherIcon(item.weathercode)} alt="weather icon" />
                 <span>{item.time}</span>
               </div>
               <div>{item.temp}°C</div>

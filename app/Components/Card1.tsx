@@ -1,5 +1,6 @@
 "use client";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Image from "next/image";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -19,7 +20,7 @@ interface CityData {
 
 function Card1({ search, setSearch, setWeatherData, setCity }:Card1Props) {
 
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState<CityData[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Debouncing
@@ -73,12 +74,12 @@ function Card1({ search, setSearch, setWeatherData, setCity }:Card1Props) {
   return (
     <div className="flex justify-center items-center px-[40px] sm:px-[100px] text-white flex-col gap-[50px] md:mt-[50px] mt-[20px]  relative">
       <div className="text-4xl font-bold text-center">
-        How's the sky looking today?
+        How&apos;s the sky looking today?
       </div>
 
       <div className="flex flex-col md:flex-row items-center text-white p-1.5 rounded-lg gap-3 w-full max-w-[450px] relative">
         <div className="flex relative w-full max-w-[350px]">
-          <img
+          <Image
             className="size-5 absolute ml-3 mt-2.5"
             src="search.svg"
             alt=""
